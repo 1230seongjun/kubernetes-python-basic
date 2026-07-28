@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다양한 액션 테스트</title>
+    <style>
+        body { 
+            font-family: 'Malgun Gothic', sans-serif; 
+            padding: 20px; 
+            line-height: 1.6; 
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        section { 
+            margin-bottom: 30px; 
+            border: 1px solid #ddd; 
+            padding: 20px; 
+            border-radius: 8px; 
+            background-color: #f9f9f9;
+        }
+        h2 { 
+            color: #333; 
+            margin-top: 0; 
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+        }
+        button, input[type="submit"] { 
+            padding: 10px 15px; 
+            cursor: pointer; 
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+        button:hover, input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .hover-box { 
+            width: 150px; 
+            height: 100px; 
+            background-color: #28a745; 
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease; 
+            margin-top: 10px; 
+            border-radius: 4px;
+        }
+        .hover-box:hover { 
+            background-color: #dc3545; 
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>HTML 종합 액션 테스트 페이지</h1>
+    <p>각 섹션별로 다양한 UI/UX 액션을 테스트할 수 있습니다.</p>
+
+    <!-- 1. 자바스크립트 클릭 액션 -->
+    <section>
+        <h2>1. 버튼 클릭 (JavaScript)</h2>
+        <button onclick="showAlert()">알림창(Alert) 띄우기</button>
+        <button onclick="changeText()">텍스트 변경하기</button>
+        <p id="textTarget">버튼을 누르면 이 텍스트가 변경됩니다.</p>
+    </section>
+
+    <!-- 2. 폼 입력 및 제출 액션 -->
+    <section>
+        <h2>2. 폼(Form) 입력 및 제출</h2>
+        <form onsubmit="return handleFormSubmit(event)">
+            <label for="username">이름: </label>
+            <input type="text" id="username" name="username" placeholder="이름을 입력하세요" required>
+            <br><br>
+            
+            <label>성별: </label>
+            <label><input type="radio" name="gender" value="male" checked> 남성</label>
+            <label><input type="radio" name="gender" value="female"> 여성</label>
+            <br><br>
+
+            <label for="browser">주로 사용하는 브라우저:</label>
+            <select id="browser" name="browser">
+                <option value="chrome">Chrome</option>
+                <option value="edge">Edge</option>
+                <option value="safari">Safari</option>
+            </select>
+            <br><br>
+            
+            <input type="checkbox" id="agree" name="agree">
+            <label for="agree">개인정보 수집에 동의합니다.</label>
+            <br><br>
+            
+            <input type="submit" value="결과 확인하기">
+        </form>
+        <p id="formResult" style="font-weight: bold;"></p>
+    </section>
+
+    <!-- 3. 링크 및 앵커 이동 액션 -->
+    <section>
+        <h2>3. 링크 이동 (Link & Anchor)</h2>
+        <ul>
+            <li><a href="https://www.google.com" target="_blank">새 창에서 Google 열기 (Target Blank)</a></li>
+            <li><a href="#bottomArea">페이지 맨 아래로 스크롤 이동 (내부 앵커)</a></li>
+        </ul>
+    </section>
+
+    <!-- 4. CSS 트랜지션 / 마우스 오버 액션 -->
+    <section>
+        <h2>4. 마우스 오버 (CSS Hover Effect)</h2>
+        <p>아래 박스 위에 마우스 커서를 올려보세요.</p>
+        <div class="hover-box">마우스를 올려주세요!</div>
+    </section>
+
+    <!-- 여백 및 하단 앵커용 공간 -->
+    <div style="height: 600px; display: flex; align-items: center; justify-content: center; background-color: #eee; margin-bottom: 20px;">
+        <p style="color: #999;">(스크롤 테스트를 위한 여백 공간입니다)</p>
+    </div>
+
+    <section id="bottomArea">
+        <h2>페이지 하단 도착</h2>
+        <p>내부 앵커를 통해 이곳으로 이동했습니다.</p>
+        <a href="#">👆 페이지 맨 위로 올라가기</a>
+    </section>
+
+    <script>
+        // 1. 알림창 띄우기 함수
+        function showAlert() {
+            alert("버튼 클릭 액션이 정상적으로 작동했습니다!");
+        }
+
+        // 2. DOM 조작(텍스트 변경) 함수
+        function changeText() {
+            const target = document.getElementById("textTarget");
+            target.innerText = "텍스트가 성공적으로 변경되었습니다! 🎉";
+            target.style.color = "#007bff";
+            target.style.fontWeight = "bold";
+        }
+
+        // 3. 폼 제출 이벤트 가로채기 및 데이터 처리 함수
+        function handleFormSubmit(event) {
+            // 폼의 기본 동작(페이지 새로고침) 방지
+            event.preventDefault(); 
+            
+            // 입력값 가져오기
+            const name = document.getElementById("username").value;
+            const browser = document.getElementById("browser").value;
+            const agree = document.getElementById("agree").checked;
+            
+            // 결과 텍스트 생성
+            const resultText = `입력된 이름: ${name} | 브라우저: ${browser} | 동의 여부: ${agree ? "O" : "X"}`;
+            
+            // 결과 화면에 출력
+            const resultElement = document.getElementById("formResult");
+            resultElement.innerText = resultText;
+            resultElement.style.color = "green";
+            
+            return false;
+        }
+    </script>
+</body>
+</html>

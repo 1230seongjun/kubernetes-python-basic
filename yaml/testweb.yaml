@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: testweb
+  name: testweb
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: testweb
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: testweb
+        svc: web
+    spec:
+      containers:
+      - image: quay.io/uvelyster/nginx
+        name: nginx
+        resources: {}
+status: {}
